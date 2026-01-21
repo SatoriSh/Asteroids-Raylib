@@ -42,6 +42,11 @@ void Player::inputHandler()
         direction += {(cosf((rotation - 90) * DEG2RAD)) * GetFrameTime() * accelerationSpeed,
                       (sinf((rotation - 90) * DEG2RAD)) * GetFrameTime() * accelerationSpeed};
     }
+
+    if (IsKeyPressed(KEY_SPACE))
+    {
+        onShoot();
+    }
 }
 
 Player::~Player()

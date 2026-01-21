@@ -34,5 +34,6 @@ void Asteroid::process()
 
 Asteroid::~Asteroid()
 {
-
+    UnloadTexture(asteroidTexture);
+    std::cout << "Asteroid deleted\n";
 }

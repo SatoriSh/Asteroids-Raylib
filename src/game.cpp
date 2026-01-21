@@ -3,7 +3,14 @@
 Game::Game()
 {
     initWindow();
-    entities.push_back(std::make_unique<Player>(screenWidth / 2, screenHeight / 2));
+
+    auto player = std::make_unique<Player>(screenWidth / 2, screenHeight / 2); // сначала создаю player здесь чтобы удобно подключиться к его событиям
+
+    player->onShoot = [this]() {
+        playerShoot();
+    };
+
+    entities.push_back(std::move(player)); // переменная player теперь пустая, объект ушел в вектор
 }
 
 void Game::process()
@@ -13,7 +20,7 @@ void Game::process()
         BeginDrawing();
         ClearBackground(BLACK);
 
-        if (IsKeyPressed(KEY_SPACE))
+        if (IsKeyPressed(KEY_E))
         {
             entities.push_back(std::make_unique<Asteroid>(screenWidth / 2, screenHeight / 2 - 100, Vector2{entities[0]->getPos()}));
         }
@@ -21,7 +28,7 @@ void Game::process()
         for (std::unique_ptr<GameObject> &entity : entities)
         {
             entity->process();
-            checkBounds(entity);
+            checkBounds(entity.get());
         }
 
         DrawFPS(10, 10);
@@ -31,7 +38,12 @@ void Game::process()
     CloseWindow();
 }
 
-void Game::checkBounds(std::unique_ptr<GameObject>& entity)
+void Game::playerShoot()
+{
+    std::cout << "Shoot!\n";
+}
+
+void Game::checkBounds(GameObject *entity)
 {
     if (entity->getPos().x > screenWidth)
         entity->setX(0);

@@ -1,5 +1,7 @@
 #pragma once
 #include <iostream>
+#include <string>
+#include <functional>
 #include "raylib.h"
 #include "game_object.h"
 
@@ -10,6 +12,8 @@ class Player : public GameObject
     ~Player();
 
     void process() override;
+
+    std::function<void()> onShoot;
 
   private:
     Vector2 direction;
