@@ -13,6 +13,11 @@ void Game::process()
         BeginDrawing();
         ClearBackground(BLACK);
 
+        if (IsKeyPressed(KEY_SPACE))
+        {
+            entities.push_back(std::make_unique<Asteroid>(screenWidth / 2, screenHeight / 2 - 100, Vector2{entities[0]->getPos()}));
+        }
+
         for (std::unique_ptr<GameObject> &entity : entities)
         {
             entity->process();
@@ -26,15 +31,15 @@ void Game::process()
     CloseWindow();
 }
 
-void Game::checkBounds(std::unique_ptr<GameObject>& entity)
+void Game::checkBounds(std::unique_ptr<GameObject>& entity) ///////////////////////////////////////
 {
-    if (entity->getX() > screenWidth)
+    if (entity->getPos().x > screenWidth)
         entity->setX(0);
-    if (entity->getX() < 0)
+    if (entity->getPos().x < 0)
         entity->setX(screenWidth);
-    if (entity->getY() > screenHeight)
+    if (entity->getPos().y > screenHeight)
         entity->setY(0);
-    if (entity->getY() < 0)
+    if (entity->getPos().y < 0)
         entity->setY(screenHeight);
 }
 

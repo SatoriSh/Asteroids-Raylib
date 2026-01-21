@@ -18,14 +18,12 @@ Player::Player(float x, float y)
 void Player::process()
 {
     inputHandler();
-
-
     
-    this->setX(this->getX() + direction.x);
-    this->setY(this->getY() + direction.y);
+    this->setX(this->getPos().x + direction.x);
+    this->setY(this->getPos().y + direction.y);
 
     DrawTexturePro(playerTexture, Rectangle{0, 0, (float)playerTexture.width, (float)playerTexture.height},
-                   Rectangle{this->getX(), this->getY(), (float)playerTexture.width, (float)playerTexture.height}, origin, rotation, WHITE);
+                   Rectangle{this->getPos().x, this->getPos().y, (float)playerTexture.width, (float)playerTexture.height}, origin, rotation, WHITE);
 }
 
 void Player::inputHandler()

@@ -7,8 +7,8 @@ class GameObject
     GameObject(float x, float y);
     ~GameObject();
 
-    float getX() const;
-    float getY() const;
+    Vector2 getPos() const;
+
     void setX(float posX);
     void setY(float posY);
 

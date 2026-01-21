@@ -13,8 +13,8 @@ void GameObject::process()
 
 void GameObject::setX(float posX) { x = posX; }
 void GameObject::setY(float posY) { y = posY; }
-float GameObject::getX() const { return x; }
-float GameObject::getY() const { return y; }
+
+Vector2 GameObject::getPos() const { return {x, y}; }
 
 GameObject::~GameObject()
 {

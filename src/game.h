@@ -4,6 +4,7 @@
 #include "raylib.h"
 #include "gameObjects/game_object.h"
 #include "gameObjects/player.h"
+#include "gameObjects/asteroid.h"
 
 class Game
 {

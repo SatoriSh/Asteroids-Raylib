@@ -125,6 +125,7 @@
   <ItemGroup>
     <ClCompile Include="main.cpp" />
     <ClCompile Include="src\game.cpp" />
+    <ClCompile Include="src\gameObjects\asteroid.cpp" />
     <ClCompile Include="src\gameObjects\game_object.cpp" />
     <ClCompile Include="src\gameObjects\player.cpp" />
   </ItemGroup>
@@ -133,6 +134,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\game.h" />
+    <ClInclude Include="src\gameObjects\asteroid.h" />
     <ClInclude Include="src\gameObjects\game_object.h" />
     <ClInclude Include="src\gameObjects\player.h" />
   </ItemGroup>
