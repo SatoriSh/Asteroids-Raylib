@@ -6,10 +6,11 @@
 class Asteroid : public GameObject
 {
   public:
-    Asteroid(float x, float y, Vector2 playerPosition);
+    Asteroid(float x, float y, Vector2 playerPosition, Texture2D &texture);
     ~Asteroid();
 
     void process() override;
+    void draw() override;
 
   private:
     Vector2 direction;

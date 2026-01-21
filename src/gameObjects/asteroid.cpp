@@ -1,7 +1,7 @@
 #include "asteroid.h"
 
-Asteroid::Asteroid(float x, float y, Vector2 playerPosition)
-	: GameObject(x, y), direction(playerPosition)
+Asteroid::Asteroid(float x, float y, Vector2 playerPosition, Texture2D& texture)
+    : GameObject(x, y), direction(playerPosition), asteroidTexture(texture)
 {
     speed = GetRandomValue(1, 4);
 
@@ -11,7 +11,6 @@ Asteroid::Asteroid(float x, float y, Vector2 playerPosition)
     rotationSpeed = GetRandomValue(1, 4);
     rotation = 0.0f;
 
-    asteroidTexture = LoadTexture("src/sprites/asteroid.png");
     asteroidTexture.width *= 2;
     asteroidTexture.height *= 2;
     origin = { (float)asteroidTexture.width / 2, (float)asteroidTexture.height / 2 };
@@ -25,11 +24,15 @@ void Asteroid::process()
     setX(getPos().x + direction.x * GetFrameTime() * speed * 0.1);
     setY(getPos().y + direction.y * GetFrameTime() * speed * 0.1);
 
-    DrawTexturePro(
-        asteroidTexture, Rectangle{0, 0, (float)asteroidTexture.width, (float)asteroidTexture.height},
+    draw();
+}
+
+void Asteroid::draw()
+{
+    DrawTexturePro(asteroidTexture, 
+        Rectangle{0, 0, (float)asteroidTexture.width, (float)asteroidTexture.height},
         Rectangle{getPos().x, getPos().y, (float)asteroidTexture.width, (float)asteroidTexture.height},
-        origin,
-        rotation, VIOLET);
+        origin, rotation, VIOLET);
 }
 
 Asteroid::~Asteroid()

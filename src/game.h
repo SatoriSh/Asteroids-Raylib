@@ -5,6 +5,7 @@
 #include "gameObjects/game_object.h"
 #include "gameObjects/player.h"
 #include "gameObjects/asteroid.h"
+#include "gameObjects/bullet.h"
 
 class Game
 {
@@ -16,6 +17,7 @@ class Game
 
   private:
     std::vector<std::unique_ptr<GameObject>> entities;
+    std::vector<std::unique_ptr<GameObject>> entitiesToAdd; // чтобы добавлять объекты по очереди
 
     void initWindow();
     void checkBounds(GameObject *entity);
@@ -23,4 +25,7 @@ class Game
     const int screenWidth = 1280;
     const int screenHeight = 720;
     const int FPS = 60;
+
+    Texture2D bulletTexture;
+    Texture2D asteroidTexture;
 };

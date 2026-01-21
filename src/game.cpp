@@ -4,6 +4,9 @@ Game::Game()
 {
     initWindow();
 
+    bulletTexture = LoadTexture("src/sprites/bullet.png");
+    asteroidTexture = LoadTexture("src/sprites/asteroid.png");
+
     auto player = std::make_unique<Player>(screenWidth / 2, screenHeight / 2); // сначала создаю player здесь чтобы удобно подключиться к его событиям
 
     player->onShoot = [this]() {
@@ -22,13 +25,22 @@ void Game::process()
 
         if (IsKeyPressed(KEY_E))
         {
-            entities.push_back(std::make_unique<Asteroid>(screenWidth / 2, screenHeight / 2 - 100, Vector2{entities[0]->getPos()}));
+            entities.push_back(std::make_unique<Asteroid>(screenWidth / 2, screenHeight / 2 - 100, Vector2{entities[0]->getPos()}, asteroidTexture));
         }
 
         for (std::unique_ptr<GameObject> &entity : entities)
         {
             entity->process();
             checkBounds(entity.get());
+        }
+
+        if (!entitiesToAdd.empty())
+        {
+            for (std::unique_ptr<GameObject> &entity : entitiesToAdd)
+            {
+                entities.push_back(std::move(entity));
+            }
+            entitiesToAdd.clear();
         }
 
         DrawFPS(10, 10);
@@ -41,6 +53,12 @@ void Game::process()
 void Game::playerShoot()
 {
     std::cout << "Shoot!\n";
+    entitiesToAdd.push_back(std::make_unique<Bullet>(
+        entities[0]->getPos().x,
+        entities[0]->getPos().y, 
+        entities[0]->getRotation(), 
+        bulletTexture)
+    );
 }
 
 void Game::checkBounds(GameObject *entity)
@@ -63,5 +81,7 @@ void Game::initWindow()
 
 Game::~Game()
 {
-
+    UnloadTexture(bulletTexture);
+    UnloadTexture(asteroidTexture);
+    std::cout << "Game deleted\n";
 }

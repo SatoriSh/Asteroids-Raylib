@@ -12,6 +12,8 @@ class Player : public GameObject
     ~Player();
 
     void process() override;
+    void draw() override;
+    float getRotation() const override;
 
     std::function<void()> onShoot;
 

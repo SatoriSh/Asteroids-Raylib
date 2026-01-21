@@ -13,6 +13,9 @@ class GameObject
     void setY(float posY);
 
     virtual void process();
+    virtual void draw();
+    virtual float getRotation() const;
+
   private:
     float x;
     float y;
