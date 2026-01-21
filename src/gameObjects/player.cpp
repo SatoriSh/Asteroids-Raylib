@@ -1,7 +1,8 @@
 #include "player.h"
 #include "raymath.h"
 
-Player::Player(float x, float y) : x(x), y(y)
+Player::Player(float x, float y) 
+    : GameObject(x, y)
 {
     direction = {0, 0};
     accelerationSpeed = 5.0f;
@@ -18,11 +19,13 @@ void Player::process()
 {
     inputHandler();
 
-    x += direction.x;
-    y += direction.y;
+
+    
+    this->setX(this->getX() + direction.x);
+    this->setY(this->getY() + direction.y);
 
     DrawTexturePro(playerTexture, Rectangle{0, 0, (float)playerTexture.width, (float)playerTexture.height},
-                   Rectangle{x, y, (float)playerTexture.width, (float)playerTexture.height}, origin, rotation, WHITE);
+                   Rectangle{this->getX(), this->getY(), (float)playerTexture.width, (float)playerTexture.height}, origin, rotation, WHITE);
 }
 
 void Player::inputHandler()
@@ -42,24 +45,6 @@ void Player::inputHandler()
                       (sinf((rotation - 90) * DEG2RAD)) * GetFrameTime() * accelerationSpeed};
     }
 }
-
-float Player::getX() const
-{
-    return x;
-};
-float Player::getY() const
-{
-    return y;
-};
-
-void Player::setPosX(float posX)
-{
-    x = posX;
-};
-void Player::setPosY(float posY)
-{
-    y = posY;
-};
 
 Player::~Player()
 {

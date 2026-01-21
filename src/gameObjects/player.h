@@ -1,25 +1,17 @@
 #pragma once
-#include "raylib.h"
 #include <iostream>
+#include "raylib.h"
+#include "game_object.h"
 
-class Player
+class Player : public GameObject
 {
   public:
     Player(float x, float y);
     ~Player();
 
-    void process();
-
-    void setPosX(float posX);
-    void setPosY(float posY);
-
-    float getX() const;
-    float getY() const;
+    void process() override;
 
   private:
-    float x;
-    float y;
-
     Vector2 direction;
     float accelerationSpeed;
     float rotation;
