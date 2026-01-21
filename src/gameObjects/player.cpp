@@ -47,4 +47,5 @@ void Player::inputHandler()
 Player::~Player()
 {
     UnloadTexture(playerTexture);
+    std::cout << "Player deleted\n";
 }

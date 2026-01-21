@@ -31,7 +31,7 @@ void Game::process()
     CloseWindow();
 }
 
-void Game::checkBounds(std::unique_ptr<GameObject>& entity) ///////////////////////////////////////
+void Game::checkBounds(std::unique_ptr<GameObject>& entity)
 {
     if (entity->getPos().x > screenWidth)
         entity->setX(0);

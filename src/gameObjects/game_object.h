@@ -5,7 +5,7 @@ class GameObject
 {
   public:
     GameObject(float x, float y);
-    ~GameObject();
+    virtual ~GameObject();
 
     Vector2 getPos() const;
 
