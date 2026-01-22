@@ -129,6 +129,7 @@
     <ClCompile Include="src\gameObjects\bullet.cpp" />
     <ClCompile Include="src\gameObjects\game_object.cpp" />
     <ClCompile Include="src\gameObjects\player.cpp" />
+    <ClCompile Include="src\utils\timer.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -139,6 +140,7 @@
     <ClInclude Include="src\gameObjects\bullet.h" />
     <ClInclude Include="src\gameObjects\game_object.h" />
     <ClInclude Include="src\gameObjects\player.h" />
+    <ClInclude Include="src\utils\timer.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
