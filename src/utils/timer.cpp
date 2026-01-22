@@ -1,17 +1,17 @@
 #include "timer.h"
 
-void setLeftTime(Timer* timer, float leftTime)
+void Timer::update()
 {
-    timer->leftTime = leftTime;
+    if (leftTime > 0.0f)
+        leftTime -= GetFrameTime();
 }
 
-void start(Timer *timer)
+bool Timer::timeout()
 {
-    if (timer->leftTime > 0.0f)
-        timer->leftTime -= GetFrameTime();
+    return leftTime <= 0.0f;
 }
 
-bool timeout(Timer *timer)
+void Timer::reset()
 {
-    return timer->leftTime <= 0.0f;
+    leftTime = timeoutTime;
 }

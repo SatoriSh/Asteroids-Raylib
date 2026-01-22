@@ -26,4 +26,6 @@ class Player : public GameObject
     Vector2 origin;
 
     void inputHandler();
+
+    Timer timer;
 };

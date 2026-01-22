@@ -1,5 +1,6 @@
 #pragma once
 #include "raylib.h"
+#include "../utils/timer.h"
 
 class GameObject
 {
@@ -15,7 +16,6 @@ class GameObject
     virtual void process();
     virtual void draw();
     virtual float getRotation() const;
-
   private:
     float x;
     float y;

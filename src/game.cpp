@@ -25,7 +25,12 @@ void Game::process()
 
         if (IsKeyPressed(KEY_E))
         {
-            entities.push_back(std::make_unique<Asteroid>(screenWidth / 2, screenHeight / 2 - 100, Vector2{entities[0]->getPos()}, asteroidTexture));
+            entities.push_back(std::make_unique<Asteroid>(
+                screenWidth / 2, 
+                screenHeight / 2, 
+                Vector2{entities[0]->getPos()}, 
+                asteroidTexture)
+            );
         }
 
         for (std::unique_ptr<GameObject> &entity : entities)

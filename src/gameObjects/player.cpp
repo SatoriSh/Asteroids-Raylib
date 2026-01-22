@@ -13,6 +13,9 @@ Player::Player(float x, float y)
     playerTexture.width *= 2.5;
     playerTexture.height *= 2.5;
     origin = {(float)playerTexture.width / 2, (float)playerTexture.height / 2};
+
+    timer.timeoutTime = 0.2f;
+    timer.leftTime = timer.timeoutTime;
 }
 
 void Player::process()

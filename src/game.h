@@ -6,6 +6,7 @@
 #include "gameObjects/player.h"
 #include "gameObjects/asteroid.h"
 #include "gameObjects/bullet.h"
+#include "utils/timer.h"
 
 class Game
 {

@@ -4,10 +4,10 @@
 
 struct Timer
 {
+    float timeoutTime;
     float leftTime;
+
+    void update();
+    bool timeout();
+    void reset();
 };
-
-
-void setLeftTime(Timer *timer, float leftTime);
-void start(Timer* timer);
-bool timeout(Timer* timer);

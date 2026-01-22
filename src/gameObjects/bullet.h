@@ -5,7 +5,7 @@
 class Bullet : public GameObject
 {
   public:
-    Bullet(float x, float y, float rotation, Texture2D& texture);
+    Bullet(float x, float y, float rotation, Texture2D &texture);
     ~Bullet();
 
     void process() override;
@@ -20,4 +20,6 @@ class Bullet : public GameObject
     float playerRotation;
     float bulletRotation;
     float rotationSpeed;
+
+    Timer timer;
 };

@@ -1,6 +1,6 @@
 #include "asteroid.h"
 
-Asteroid::Asteroid(float x, float y, Vector2 playerPosition, Texture2D& texture)
+Asteroid::Asteroid(float x, float y, Vector2 playerPosition, Texture2D &texture)
     : GameObject(x, y), direction(playerPosition), asteroidTexture(texture)
 {
     speed = GetRandomValue(1, 4);
@@ -14,6 +14,9 @@ Asteroid::Asteroid(float x, float y, Vector2 playerPosition, Texture2D& texture)
     asteroidTexture.width *= 2;
     asteroidTexture.height *= 2;
     origin = { (float)asteroidTexture.width / 2, (float)asteroidTexture.height / 2 };
+
+    timer.timeoutTime = 10.0f;
+    timer.leftTime = timer.timeoutTime;
 }
 
 void Asteroid::process()
@@ -25,6 +28,13 @@ void Asteroid::process()
     setY(getPos().y + direction.y * GetFrameTime() * speed * 0.1);
 
     draw();
+
+    timer.update();
+
+    if (timer.timeout())
+    {
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    }
 }
 
 void Asteroid::draw()

@@ -1,7 +1,7 @@
 #include <iostream>
 #include "bullet.h"
 
-Bullet::Bullet(float x, float y, float rotation, Texture2D& texture)
+Bullet::Bullet(float x, float y, float rotation, Texture2D &texture)
     : GameObject(x, y), playerRotation(rotation), bulletTexture(texture)
 {
     speed = 400.0f;
@@ -12,6 +12,9 @@ Bullet::Bullet(float x, float y, float rotation, Texture2D& texture)
 
     direction = {(cosf((playerRotation - 90) * DEG2RAD)),
                  (sinf((playerRotation - 90) * DEG2RAD))};
+
+    timer.timeoutTime = 4.5f;
+    timer.leftTime = timer.timeoutTime;
 }
 
 void Bullet::process()
