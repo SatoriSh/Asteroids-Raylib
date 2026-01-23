@@ -48,6 +48,18 @@ void Game::process()
             entitiesToAdd.clear();
         }
 
+        entities.erase(
+                std::remove_if(
+                    entities.begin(),
+                    entities.end(),
+                    [](const std::unique_ptr<GameObject>& entity) 
+                    { 
+                        return !entity->isAlive;
+                    }
+                ),
+                entities.end()
+            );
+
         DrawFPS(10, 10);
         EndDrawing();
     }

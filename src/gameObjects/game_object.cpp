@@ -2,8 +2,8 @@
 
 #include <iostream>
 
-GameObject::GameObject(float x, float y)
-	: x(x), y(y)
+GameObject::GameObject(float x, float y, bool isAlive)
+	: x(x), y(y), isAlive(isAlive)
 {
 
 }

@@ -28,4 +28,6 @@ class Player : public GameObject
     void inputHandler();
 
     Timer timer;
+    bool canShoot;
+    float cooldownTime;
 };

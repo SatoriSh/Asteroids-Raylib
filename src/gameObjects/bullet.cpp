@@ -2,18 +2,19 @@
 #include "bullet.h"
 
 Bullet::Bullet(float x, float y, float rotation, Texture2D &texture)
-    : GameObject(x, y), playerRotation(rotation), bulletTexture(texture)
+    : GameObject(x, y, true), playerRotation(rotation), bulletTexture(texture)
 {
-    speed = 400.0f;
+    speed = 650.0f;
     rotateClockwise = GetRandomValue(1, 10) >= 5 ? true : false;
     bulletRotation = 0.0f;
     rotationSpeed = 2.5f;
+
     origin = {(float)bulletTexture.width / 2, (float)bulletTexture.height / 2};
 
     direction = {(cosf((playerRotation - 90) * DEG2RAD)),
                  (sinf((playerRotation - 90) * DEG2RAD))};
 
-    timer.timeoutTime = 4.5f;
+    timer.timeoutTime = 3.5f;
     timer.leftTime = timer.timeoutTime;
 }
 
@@ -26,13 +27,20 @@ void Bullet::process()
     setY(getPos().y + direction.y * GetFrameTime() * speed);
 
     draw();
+
+    timer.update();
+
+    if (timer.timeout())
+    {
+        this->isAlive = false;
+    }
 }
 
 void Bullet::draw()
 {
     DrawTexturePro(bulletTexture, Rectangle{0, 0, (float)bulletTexture.width, (float)bulletTexture.height},
                    Rectangle{getPos().x, getPos().y, (float)bulletTexture.width, (float)bulletTexture.height},
-                   origin, bulletRotation, YELLOW);
+                   origin, bulletRotation, WHITE);
 }
 
 Bullet::~Bullet()

@@ -5,7 +5,7 @@
 class GameObject
 {
   public:
-    GameObject(float x, float y);
+    GameObject(float x, float y, bool isAlive);
     virtual ~GameObject();
 
     Vector2 getPos() const;
@@ -16,6 +16,8 @@ class GameObject
     virtual void process();
     virtual void draw();
     virtual float getRotation() const;
+
+    bool isAlive;
   private:
     float x;
     float y;
