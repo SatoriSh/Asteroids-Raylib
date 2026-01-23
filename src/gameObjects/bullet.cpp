@@ -5,10 +5,12 @@ Bullet::Bullet(float x, float y, float rotation, Texture2D &texture)
     : GameObject(x, y, true), playerRotation(rotation), bulletTexture(texture)
 {
     speed = 650.0f;
-    rotateClockwise = GetRandomValue(1, 10) >= 5 ? true : false;
+    rotateClockwise = GetRandomValue(1, 2) == 1 ? true : false;
     bulletRotation = 0.0f;
-    rotationSpeed = 2.5f;
+    rotationSpeed = 400.0f;
 
+    bulletTexture.width *= 2;
+    bulletTexture.height *= 2;
     origin = {(float)bulletTexture.width / 2, (float)bulletTexture.height / 2};
 
     direction = {(cosf((playerRotation - 90) * DEG2RAD)),
@@ -22,9 +24,6 @@ Bullet::Bullet(float x, float y, float rotation, Texture2D &texture)
 
 void Bullet::process()
 {
-    if (rotateClockwise) bulletRotation += rotationSpeed;
-    else bulletRotation -= rotationSpeed;
-
     setX(getPos().x + direction.x * GetFrameTime() * speed);
     setY(getPos().y + direction.y * GetFrameTime() * speed);
 
@@ -42,7 +41,7 @@ void Bullet::draw()
 {
     DrawTexturePro(bulletTexture, Rectangle{0, 0, (float)bulletTexture.width, (float)bulletTexture.height},
                    Rectangle{getPos().x, getPos().y, (float)bulletTexture.width, (float)bulletTexture.height},
-                   origin, bulletRotation, WHITE);
+                   origin, playerRotation, WHITE);
 }
 
 Bullet::~Bullet()
