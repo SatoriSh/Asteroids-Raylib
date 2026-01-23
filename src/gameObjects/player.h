@@ -16,7 +16,6 @@ class Player : public GameObject
     float getRotation() const override;
 
     std::function<void()> onShoot;
-
   private:
     Vector2 direction;
     float accelerationSpeed;

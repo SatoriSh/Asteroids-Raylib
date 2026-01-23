@@ -6,7 +6,7 @@ Player::Player(float x, float y)
 {
     direction = {0, 0};
     accelerationSpeed = 15.5f;
-    rotationSpeed = 5.0f;
+    rotationSpeed = 350.0f;
     rotation = 0.0f;
 
     playerTexture = LoadTexture("src/sprites/player.png");
@@ -56,11 +56,11 @@ void Player::inputHandler()
 {
     if (IsKeyDown(KEY_LEFT) || IsKeyDown(KEY_A))
     {
-        rotation -= rotationSpeed;
+        rotation -= rotationSpeed * GetFrameTime();
     }
     if (IsKeyDown(KEY_RIGHT) || IsKeyDown(KEY_D))
     {
-        rotation += rotationSpeed;
+        rotation += rotationSpeed * GetFrameTime();
     }
     if (IsKeyDown(KEY_UP) || IsKeyDown(KEY_W))
     {
@@ -82,11 +82,8 @@ void Player::inputHandler()
     if (IsKeyDown(KEY_SPACE) && canShoot)
     {
         onShoot();
-        if (canShoot)
-        {
-            canShoot = false;
-            timer.reset();
-        }
+        canShoot = false;
+        timer.reset();
     }
 }
 
