@@ -8,6 +8,6 @@ struct Timer
     float leftTime;
 
     void update();
-    bool timeout();
+    bool timeout() const;
     void reset();
 };

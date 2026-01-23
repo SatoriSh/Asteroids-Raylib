@@ -5,36 +5,41 @@ Player::Player(float x, float y)
     : GameObject(x, y, true)
 {
     direction = {0, 0};
-    accelerationSpeed = 8.0f;
+    accelerationSpeed = 15.5f;
     rotationSpeed = 5.0f;
     rotation = 0.0f;
 
     playerTexture = LoadTexture("src/sprites/player.png");
-    playerTexture.width *= 2.5;
-    playerTexture.height *= 2.5;
+    playerTexture.width *= 3.5;
+    playerTexture.height *= 3.5;
     origin = {(float)playerTexture.width / 2, (float)playerTexture.height / 2};
+
+    playerEngineFlameTexture = LoadTexture("src/sprites/player_engine_flame.png");
+    playerEngineFlameTexture.width *= 3.5;
+    playerEngineFlameTexture.height *= 3.5;
 
     cooldownTime = 0.2f;
     timer.timeoutTime = cooldownTime;
     timer.leftTime = timer.timeoutTime;
+    canShoot = true;
+
+    drawEngineFlameTimer.timeoutTime = 0.05f;
+    drawEngineFlameTimer.leftTime = drawEngineFlameTimer.timeoutTime;
+    engineFlameTransparency = 1.0f;
+
+    std::cout << "Player created\n";
 }
 
 void Player::process()
-{
+{   
+    updateTimers();
+
     inputHandler();
     
     setX(getPos().x + direction.x);
     setY(getPos().y + direction.y);
 
     draw();
-
-    if (timer.leftTime > 0.0f)
-        timer.update();
-
-    if (timer.timeout())
-    {
-        canShoot = true;
-    }
 }
 
 void Player::draw()
@@ -43,6 +48,8 @@ void Player::draw()
         playerTexture, Rectangle{0, 0, (float)playerTexture.width, (float)playerTexture.height},
         Rectangle{getPos().x, getPos().y, (float)playerTexture.width, (float)playerTexture.height}, origin,
         rotation, WHITE);
+
+    drawEngineFlame();
 }
 
 void Player::inputHandler()
@@ -57,8 +64,20 @@ void Player::inputHandler()
     }
     if (IsKeyDown(KEY_UP) || IsKeyDown(KEY_W))
     {
-        direction += {(cosf((rotation - 90) * DEG2RAD)) * GetFrameTime() * accelerationSpeed,
-                      (sinf((rotation - 90) * DEG2RAD)) * GetFrameTime() * accelerationSpeed};
+        updateDirection();
+        if (drawEngineFlameTimer.timeout())
+        {
+            engineFlameTransparency = 1.0f;
+            drawEngineFlameTimer.reset();
+        }
+        else
+        {
+            engineFlameTransparency = 0.0f;
+        }
+    }
+    else
+    {
+        engineFlameTransparency = 0.0f;
     }
     if (IsKeyDown(KEY_SPACE) && canShoot)
     {
@@ -69,6 +88,34 @@ void Player::inputHandler()
             timer.reset();
         }
     }
+}
+
+void Player::updateDirection()
+{
+    direction += {(cosf((rotation - 90) * DEG2RAD)) * GetFrameTime() * accelerationSpeed,
+                  (sinf((rotation - 90) * DEG2RAD)) * GetFrameTime() * accelerationSpeed};
+}
+
+void Player::drawEngineFlame()
+{
+    DrawTexturePro(
+        playerEngineFlameTexture, Rectangle{0, 0, (float)playerEngineFlameTexture.width, (float)playerEngineFlameTexture.height},
+        Rectangle{getPos().x, getPos().y, (float)playerEngineFlameTexture.width, (float)playerEngineFlameTexture.height}, origin,
+        rotation, Fade(RED, engineFlameTransparency));
+}
+
+void Player::updateTimers()
+{
+    if (timer.leftTime > 0.0f)
+        timer.update();
+
+    if (timer.timeout())
+    {
+        canShoot = true;
+    }
+    
+    if (drawEngineFlameTimer.leftTime > 0.0f)
+        drawEngineFlameTimer.update();
 }
 
 float Player::getRotation() const

@@ -8,6 +8,12 @@
 #include "gameObjects/bullet.h"
 #include "utils/timer.h"
 
+struct AsteroidSpawnConfig
+{
+    float timeToSpawn;
+    int quantity;
+};
+
 class Game
 {
   public:
@@ -23,10 +29,15 @@ class Game
     void initWindow();
     void checkBounds(GameObject *entity);
     void playerShoot();
-    const int screenWidth = 1280;
-    const int screenHeight = 720;
+    void spawnAsteroids();
+    const int screenWidth = 850;
+    const int screenHeight = 850;
     const int FPS = 60;
 
     Texture2D bulletTexture;
     Texture2D asteroidTexture;
+
+    Timer asteroidSpawnTimer;
+    std::vector<AsteroidSpawnConfig> asteroidSpawnConfig;
+    int currentLevel = 0;
 };

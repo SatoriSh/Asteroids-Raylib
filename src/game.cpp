@@ -14,6 +14,16 @@ Game::Game()
     };
 
     entities.push_back(std::move(player)); // переменная player теперь пустая, объект ушел в вектор
+
+    asteroidSpawnConfig = {
+        {7.5f, 3},
+        {6.5f, 5},
+        {5.0f, 6}
+    };
+
+    asteroidSpawnTimer.timeoutTime = asteroidSpawnConfig[currentLevel].timeToSpawn;
+    asteroidSpawnTimer.leftTime = asteroidSpawnTimer.timeoutTime;
+    spawnAsteroids();
 }
 
 void Game::process()
@@ -23,14 +33,12 @@ void Game::process()
         BeginDrawing();
         ClearBackground(BLACK);
 
-        if (IsKeyPressed(KEY_E))
+        asteroidSpawnTimer.update();
+
+        if (asteroidSpawnTimer.timeout())
         {
-            entities.push_back(std::make_unique<Asteroid>(
-                screenWidth / 2, 
-                screenHeight / 2, 
-                Vector2{entities[0]->getPos()}, 
-                asteroidTexture)
-            );
+            asteroidSpawnTimer.reset();
+            spawnAsteroids();
         }
 
         for (std::unique_ptr<GameObject> &entity : entities)
@@ -76,6 +84,23 @@ void Game::playerShoot()
         entities[0]->getRotation(), 
         bulletTexture)
     );
+}
+
+void Game::spawnAsteroids()
+{
+
+    for (int i = 0; i < asteroidSpawnConfig[currentLevel].quantity; i++)
+    {
+        int x = GetRandomValue(0, screenWidth);
+        int y = GetRandomValue(1, 2) == 1 ? 1 : screenHeight;
+
+        entities.push_back(std::make_unique<Asteroid>(
+            x, 
+            y, 
+            Vector2{entities[0]->getPos()}, 
+            asteroidTexture));
+
+    }
 }
 
 void Game::checkBounds(GameObject *entity)

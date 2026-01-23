@@ -23,11 +23,17 @@ class Player : public GameObject
     float rotation;
     float rotationSpeed;
     Texture2D playerTexture;
+    Texture2D playerEngineFlameTexture;
     Vector2 origin;
-
     void inputHandler();
+    void updateDirection();
+    void drawEngineFlame();
+    void updateTimers();
 
     Timer timer;
+    Timer drawEngineFlameTimer;
     bool canShoot;
     float cooldownTime;
+
+    float engineFlameTransparency;
 };

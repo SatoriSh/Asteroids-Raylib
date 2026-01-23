@@ -6,7 +6,7 @@ void Timer::update()
         leftTime -= GetFrameTime();
 }
 
-bool Timer::timeout()
+bool Timer::timeout() const
 {
     return leftTime <= 0.0f;
 }

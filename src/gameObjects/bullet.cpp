@@ -16,6 +16,8 @@ Bullet::Bullet(float x, float y, float rotation, Texture2D &texture)
 
     timer.timeoutTime = 3.5f;
     timer.leftTime = timer.timeoutTime;
+
+    std::cout << "Bullet created\n";
 }
 
 void Bullet::process()

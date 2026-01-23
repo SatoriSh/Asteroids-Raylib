@@ -20,6 +20,4 @@ class Asteroid : public GameObject
     float rotationSpeed;
     Vector2 origin;
     bool rotateClockwise;
-
-    Timer timer;
 };

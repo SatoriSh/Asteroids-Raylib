@@ -15,8 +15,7 @@ Asteroid::Asteroid(float x, float y, Vector2 playerPosition, Texture2D &texture)
     asteroidTexture.height *= 2;
     origin = { (float)asteroidTexture.width / 2, (float)asteroidTexture.height / 2 };
 
-    timer.timeoutTime = 15.0f;
-    timer.leftTime = timer.timeoutTime;
+    std::cout << "Asteroid created\n";
 }
 
 void Asteroid::process()
@@ -28,13 +27,6 @@ void Asteroid::process()
     setY(getPos().y + direction.y * GetFrameTime() * speed * 0.1);
 
     draw();
-        
-    timer.update();
-
-    if (timer.timeout())
-    {
-        this->isAlive = false;
-    }
 }
 
 void Asteroid::draw()
