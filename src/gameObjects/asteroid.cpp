@@ -7,12 +7,13 @@ Asteroid::Asteroid(float x, float y, Vector2 playerPosition, Texture2D &texture)
 
     direction = {playerPosition.x - getPos().x, playerPosition.y - getPos().y};
 
-    rotateClockwise = GetRandomValue(1, 10) >= 5 ? true : false;
-    rotationSpeed = GetRandomValue(1, 4);
+    rotateClockwise = GetRandomValue(1, 2) == 1 ? true : false;
+    rotationSpeed = GetRandomValue(50, 350);
     rotation = 0.0f;
 
-    asteroidTexture.width *= 2;
-    asteroidTexture.height *= 2;
+    int resizeValue = GetRandomValue(2,4);
+    asteroidTexture.width *= resizeValue;
+    asteroidTexture.height *= resizeValue;
     origin = { (float)asteroidTexture.width / 2, (float)asteroidTexture.height / 2 };
 
     std::cout << "Asteroid created\n";
@@ -20,8 +21,8 @@ Asteroid::Asteroid(float x, float y, Vector2 playerPosition, Texture2D &texture)
 
 void Asteroid::process()
 {
-    if (rotateClockwise) rotation += rotationSpeed;
-    else rotation -= rotationSpeed;
+    if (rotateClockwise) rotation += rotationSpeed * GetFrameTime();
+    else rotation -= rotationSpeed * GetFrameTime();
 
     setX(getPos().x + direction.x * GetFrameTime() * speed * 0.1);
     setY(getPos().y + direction.y * GetFrameTime() * speed * 0.1);
