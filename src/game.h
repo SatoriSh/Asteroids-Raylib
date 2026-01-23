@@ -29,6 +29,7 @@ class Game
     void initWindow();
     void checkBounds(GameObject *entity);
     void playerShoot();
+    void splitAsteroid(int asteroidLvl, Vector2 position);
     void spawnAsteroids();
     const int screenWidth = 850;
     const int screenHeight = 850;

@@ -6,13 +6,15 @@
 class Asteroid : public GameObject
 {
   public:
-    Asteroid(float x, float y, Vector2 playerPosition, Texture2D &texture);
+    Asteroid(float x, float y, int asteroidLvl, Vector2 playerPosition, Texture2D &texture);
     ~Asteroid();
 
     void process() override;
     void draw() override;
 
+    std::function<void(int asteroidLvl, Vector2 position)> onDestroyed;
   private:
+    int asteroidLvl;
     Vector2 direction;
     Texture2D asteroidTexture;
     float speed;

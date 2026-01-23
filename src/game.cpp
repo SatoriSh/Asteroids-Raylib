@@ -88,18 +88,37 @@ void Game::playerShoot()
 
 void Game::spawnAsteroids()
 {
-
     for (int i = 0; i < asteroidSpawnConfig[currentLevel].quantity; i++)
     {
-        int x = GetRandomValue(0, screenWidth);
-        int y = GetRandomValue(1, 2) == 1 ? 1 : screenHeight;
+        float x = GetRandomValue(0, screenWidth);
+        float y = GetRandomValue(1, 2) == 1 ? 1 : screenHeight;
 
-        entities.push_back(std::make_unique<Asteroid>(
-            x, 
-            y, 
-            Vector2{entities[0]->getPos()}, 
-            asteroidTexture));
+        auto asteroid = std::make_unique<Asteroid>(x, y, GetRandomValue(1, 3), Vector2{entities[0]->getPos()}, asteroidTexture);
 
+        asteroid->onDestroyed = [this](int asteroidLvl, Vector2 position) {
+            splitAsteroid(asteroidLvl, position);
+        };
+
+        entities.push_back(std::move(asteroid));
+    }
+}
+
+void Game::splitAsteroid(int asteroidLvl, Vector2 position)
+{
+    if (asteroidLvl < 2)
+        return;
+
+    int asteroidsCount = asteroidLvl == 2 ? 3 : 2;
+
+    for (int i = 0; i < asteroidsCount; i++)
+    {
+        auto asteroid = std::make_unique<Asteroid>(position.x, position.y, asteroidLvl - 1, Vector2{(float)GetRandomValue(-screenWidth, screenWidth), (float)GetRandomValue(-screenHeight, screenHeight)}, asteroidTexture);
+
+        asteroid->onDestroyed = [this](int asteroidLvl, Vector2 position) {
+            splitAsteroid(asteroidLvl, position);
+        };
+
+        entitiesToAdd.push_back(std::move(asteroid));
     }
 }
 

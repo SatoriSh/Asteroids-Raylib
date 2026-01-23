@@ -40,6 +40,8 @@ void Player::process()
     setY(getPos().y + direction.y);
 
     draw();
+
+    std::cout << "direction X: " << direction.x << "\ndirection Y: " << direction.y << "\n";
 }
 
 void Player::draw()

@@ -1,7 +1,7 @@
 #include "asteroid.h"
 
-Asteroid::Asteroid(float x, float y, Vector2 playerPosition, Texture2D &texture)
-    : GameObject(x, y, true), direction(playerPosition), asteroidTexture(texture)
+Asteroid::Asteroid(float x, float y, int asteroidLvl, Vector2 playerPosition, Texture2D &texture)
+    : GameObject(x, y, true), direction(playerPosition), asteroidTexture(texture), asteroidLvl(asteroidLvl)
 {
     speed = GetRandomValue(1, 4);
 
@@ -10,11 +10,9 @@ Asteroid::Asteroid(float x, float y, Vector2 playerPosition, Texture2D &texture)
     rotateClockwise = GetRandomValue(1, 2) == 1 ? true : false;
     rotationSpeed = GetRandomValue(50, 350);
     rotation = 0.0f;
-
-    int resizeValue = GetRandomValue(2,4);
-    asteroidTexture.width *= resizeValue;
-    asteroidTexture.height *= resizeValue;
-    origin = { (float)asteroidTexture.width / 2, (float)asteroidTexture.height / 2 };
+    asteroidTexture.width *= asteroidLvl + 1;
+    asteroidTexture.height *= asteroidLvl + 1;
+    origin = {(float)asteroidTexture.width / 2, (float)asteroidTexture.height / 2};
 
     std::cout << "Asteroid created\n";
 }
@@ -28,6 +26,14 @@ void Asteroid::process()
     setY(getPos().y + direction.y * GetFrameTime() * speed * 0.1);
 
     draw();
+
+    if (IsKeyPressed(KEY_E))
+    {
+        if (asteroidLvl > 1)
+            onDestroyed(asteroidLvl, getPos());
+
+        isAlive = false;
+    }
 }
 
 void Asteroid::draw()
