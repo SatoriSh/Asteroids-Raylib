@@ -27,7 +27,7 @@ class Player : public GameObject
     Vector2 origin;
     Rectangle rec;
     void inputHandler();
-    void updateDirection();
+    void updateDirection(int value);
     void drawEngineFlame();
     void updateTimers();
 

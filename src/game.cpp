@@ -23,6 +23,8 @@ Game::Game()
 
     asteroidSpawnTimer.timeoutTime = asteroidSpawnConfig[currentLevel].timeToSpawn;
     asteroidSpawnTimer.leftTime = asteroidSpawnTimer.timeoutTime;
+    
+    generateStarsOnce();
     spawnAsteroids();
 }
 
@@ -32,6 +34,13 @@ void Game::process()
     {
         BeginDrawing();
         ClearBackground(BLACK);
+
+        DrawTextureRec(
+            starsTexture.texture,
+            Rectangle{0, 0, (float)starsTexture.texture.width, -(float)starsTexture.texture.height},
+            Vector2{0, 0},
+            WHITE
+        );
 
         asteroidSpawnTimer.update();
         
@@ -124,6 +133,8 @@ void Game::checkCollisions()
 
                     splitAsteroid(asteroid->asteroidLvl, asteroid->getPos());
                     entity2->isAlive = false;
+
+                    //////////////////////
                     entity1->isAlive = false;
                 }
             }
@@ -162,10 +173,28 @@ void Game::checkBounds(GameObject *entity)
         entity->setY(screenHeight);
 }
 
+void Game::generateStarsOnce()
+{
+    starsTexture = LoadRenderTexture(screenWidth, screenHeight);
+
+    BeginTextureMode(starsTexture);
+
+    for (int i = 0; i < starsCount; i++)
+    {
+        DrawCircle(GetRandomValue(1, screenWidth), GetRandomValue(1, screenHeight), 1.0f, VIOLET);
+    }
+
+    EndTextureMode();
+}
+
 void Game::initWindow()
 {
-    InitWindow(screenWidth, screenHeight, "Asteroids");
+    SetConfigFlags(FLAG_WINDOW_UNDECORATED);
+
+    InitWindow(GetMonitorWidth(0), GetMonitorHeight(0), "Asteroids");
     SetTargetFPS(FPS);
+
+    MaximizeWindow();
 }
 
 Game::~Game()

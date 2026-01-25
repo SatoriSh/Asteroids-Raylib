@@ -7,7 +7,7 @@ Player::Player(float x, float y)
     gameObjectType = GameObjectTypeEnum::PlAYER;
 
     direction = {0, 0};
-    accelerationSpeed = 15.5f;
+    accelerationSpeed = 12.5f;
     rotationSpeed = 300.0f;
     rotation = 0.0f;
 
@@ -68,7 +68,7 @@ void Player::inputHandler()
     }
     if (IsKeyDown(KEY_UP) || IsKeyDown(KEY_W))
     {
-        updateDirection();
+        updateDirection(1);
         if (drawEngineFlameTimer.timeout())
         {
             engineFlameTransparency = 1.0f;
@@ -88,13 +88,15 @@ void Player::inputHandler()
         onShoot();
         canShoot = false;
         timer.reset();
+
+        updateDirection(-1); // push back
     }
 }
 
-void Player::updateDirection()
+void Player::updateDirection(int value)
 {
-    direction += {(cosf((rotation - 90) * DEG2RAD)) * GetFrameTime() * accelerationSpeed,
-                  (sinf((rotation - 90) * DEG2RAD)) * GetFrameTime() * accelerationSpeed};
+    direction += {(cosf((rotation - 90) * DEG2RAD)) * GetFrameTime() * accelerationSpeed * value,
+                  (sinf((rotation - 90) * DEG2RAD)) * GetFrameTime() * accelerationSpeed * value};
 }
 
 void Player::drawEngineFlame()

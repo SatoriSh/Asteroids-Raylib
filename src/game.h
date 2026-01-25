@@ -33,8 +33,12 @@ class Game
     void splitAsteroid(int asteroidLvl, Vector2 position);
     void spawnAsteroids();
     void checkCollisions();
-    const int screenWidth = 850;
-    const int screenHeight = 850;
+    void generateStarsOnce();
+    RenderTexture2D starsTexture;
+    const int starsCount = 500;
+
+    const int screenWidth = 1920;
+    const int screenHeight = 1080;
     const int FPS = 60;
 
     Texture2D bulletTexture;
