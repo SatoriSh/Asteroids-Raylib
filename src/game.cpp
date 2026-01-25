@@ -10,6 +10,9 @@ Game::Game()
     playerInit();
     entities[0]->isAlive = false;
 
+    score = 0;
+    currentLevel = 0;
+
     asteroidSpawnConfig = {
         {7.5f, 3},
         {6.5f, 5},
@@ -99,15 +102,14 @@ void Game::spawnAsteroids()
     for (int i = 0; i < asteroidSpawnConfig[currentLevel].quantity; i++)
     {
         float x = GetRandomValue(0, screenWidth);
-        float y = GetRandomValue(1, 2) == 1 ? 1 : screenHeight;
+        float y = GetRandomValue(1, 2) == 1 ? 0 : screenHeight;
 
-        auto asteroid = std::make_unique<Asteroid>(x, y, GetRandomValue(1, 3), Vector2{entities[0]->getPos()}, asteroidTexture);
-
-        asteroid->onDestroyed = [this](int asteroidLvl, Vector2 position) {
-            splitAsteroid(asteroidLvl, position);
-        };
-
-        entities.push_back(std::move(asteroid));
+        entities.push_back(std::make_unique<Asteroid>(
+            x, y, 
+            GetRandomValue(1, 3), 
+            Vector2{entities[0]->getPos()}, 
+            asteroidTexture)
+        );
     }
 }
 
@@ -129,7 +131,9 @@ void Game::checkCollisions()
                 {
                     Asteroid *asteroid = dynamic_cast<Asteroid *>(entity2.get());
 
-                    splitAsteroid(asteroid->asteroidLvl, asteroid->getPos());
+                    if (asteroid->asteroidLvl > 1)
+                        splitAsteroid(asteroid->asteroidLvl, asteroid->getPos());
+                    
                     entity2->isAlive = false;
 
                     //////////////////////
@@ -142,39 +146,31 @@ void Game::checkCollisions()
 
 void Game::splitAsteroid(int asteroidLvl, Vector2 position)
 {
-    if (asteroidLvl < 2)
-        return;
-
     int asteroidsCount = asteroidLvl == 2 ? 3 : 2;
 
     for (int i = 0; i < asteroidsCount; i++)
     {
         Vector2 direction = {GetRandomValue(GetScreenWidth() / 2, GetScreenWidth() / 4), GetRandomValue(GetScreenWidth() / 2, GetScreenHeight() / 4)};
 
-        auto asteroid = std::make_unique<Asteroid>(
+        entitiesToAdd.push_back(std::make_unique<Asteroid>(
             position.x, position.y, 
             asteroidLvl - 1, 
             direction, 
-            asteroidTexture
+            asteroidTexture)
         );
-
-        asteroid->onDestroyed = [this](int asteroidLvl, Vector2 position) {
-            splitAsteroid(asteroidLvl, position);
-        };
-
-        entitiesToAdd.push_back(std::move(asteroid));
     }
 }
 
 void Game::checkBounds(GameObject *entity)
 {
-    if (entity->getPos().x > screenWidth)
+    if (entity->getPos().x > screenWidth + 15)
         entity->setX(0);
-    if (entity->getPos().x < 0)
+    if (entity->getPos().x < -15)
         entity->setX(screenWidth);
-    if (entity->getPos().y > screenHeight)
+
+    if (entity->getPos().y > screenHeight + 15)
         entity->setY(0);
-    if (entity->getPos().y < 0)
+    if (entity->getPos().y < -15)
         entity->setY(screenHeight);
 }
 
@@ -210,8 +206,8 @@ bool Game::checkIfPlayerDie()
         if (IsKeyPressed(KEY_ENTER))
         {
             entities.clear();
-            beginning = false;
             playerInit();
+            spawnAsteroids();
             asteroidSpawnTimer.reset();
             return false;
         }
@@ -230,6 +226,9 @@ void Game::initWindow()
     SetTargetFPS(FPS);
 
     MaximizeWindow();
+
+    screenWidth = GetScreenWidth();
+    screenHeight = GetScreenHeight();
 }
 
 Game::~Game()

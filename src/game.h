@@ -39,15 +39,15 @@ class Game
     RenderTexture2D starsTexture;
     
     const int starsCount = 500;
-    const int screenWidth = 1920;
-    const int screenHeight = 1080;
+    int screenWidth;
+    int screenHeight;
     const int FPS = 60;
-    bool beginning = true;
 
     Texture2D bulletTexture;
     Texture2D asteroidTexture;
 
     Timer asteroidSpawnTimer;
     std::vector<AsteroidSpawnConfig> asteroidSpawnConfig;
-    int currentLevel = 0;
+    int currentLevel;
+    int score;
 };

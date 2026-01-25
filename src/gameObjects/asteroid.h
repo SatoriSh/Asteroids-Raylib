@@ -12,8 +12,6 @@ class Asteroid : public GameObject
     void process() override;
     void draw() override;
     Rectangle getRec() const override;
-
-    std::function<void(int asteroidLvl, Vector2 position)> onDestroyed;
     int asteroidLvl;
   private:
     Vector2 direction;
