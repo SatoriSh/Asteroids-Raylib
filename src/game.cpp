@@ -8,7 +8,7 @@ Game::Game()
     asteroidTexture = LoadTexture("src/sprites/asteroid.png");
 
     explosionSound = LoadSound("src/sounds/explosion.wav");
-    SetSoundVolume(explosionSound, 0.35f);
+    SetSoundVolume(explosionSound, 0.25f);
 
     playerInit();
     entities[0]->isAlive = false;

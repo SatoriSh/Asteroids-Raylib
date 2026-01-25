@@ -4,7 +4,7 @@
 GameObject::GameObject(float x, float y, bool isAlive)
 	: x(x), y(y), isAlive(isAlive)
 {
-
+    std::cout << "GameObject created\n";
 }
 
 void GameObject::process() {}

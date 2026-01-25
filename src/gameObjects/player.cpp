@@ -33,6 +33,7 @@ Player::Player(float x, float y)
     shootSound = LoadSound("src/sounds/fire.wav");
     engineSound = LoadSound("src/sounds/thrust.wav");
     SetSoundVolume(shootSound, 0.2f);
+    SetSoundVolume(engineSound, 0.25f);
 
     std::cout << "Player created\n";
 }
