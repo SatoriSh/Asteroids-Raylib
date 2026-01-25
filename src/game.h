@@ -27,10 +27,12 @@ class Game
     std::vector<std::unique_ptr<GameObject>> entities;
     std::vector<std::unique_ptr<GameObject>> entitiesToAdd; // чтобы добавлять объекты по очереди
 
+
     void initWindow();
     void playerInit();
     void checkBounds(GameObject *entity);
     void playerShoot();
+    void updateScore(int destroyedAsteroidLvl);
     void splitAsteroid(int asteroidLvl, Vector2 position);
     void spawnAsteroids();
     void checkCollisions();

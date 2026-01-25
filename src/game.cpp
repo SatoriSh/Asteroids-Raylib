@@ -80,6 +80,7 @@ void Game::process()
                 entities.end()
             );
 
+        DrawText(TextFormat("%d", score), screenWidth / 2 - 50, 35, 60, WHITE);
         DrawFPS(10, 10);
         EndDrawing();
     }
@@ -102,7 +103,7 @@ void Game::spawnAsteroids()
     for (int i = 0; i < asteroidSpawnConfig[currentLevel].quantity; i++)
     {
         float x = GetRandomValue(0, screenWidth);
-        float y = GetRandomValue(1, 2) == 1 ? 0 : screenHeight;
+        float y = GetRandomValue(1, 2) == 1 ? 0 : screenHeight + 10;
 
         entities.push_back(std::make_unique<Asteroid>(
             x, y, 
@@ -133,6 +134,8 @@ void Game::checkCollisions()
 
                     if (asteroid->asteroidLvl > 1)
                         splitAsteroid(asteroid->asteroidLvl, asteroid->getPos());
+
+                    updateScore(asteroid->asteroidLvl);
                     
                     entity2->isAlive = false;
 
@@ -198,6 +201,16 @@ void Game::playerInit()
     entities.push_back(std::move(player)); // переменная player теперь пустая, объект ушел в вектор
 }
 
+void Game::updateScore(int destroyedAsteroidLvl)
+{
+    if (destroyedAsteroidLvl == 1)
+        score += 100;
+    else if (destroyedAsteroidLvl == 2)
+        score += 50;
+    else if (destroyedAsteroidLvl == 3)
+        score += 15;
+}
+
 bool Game::checkIfPlayerDie()
 {
     if (!entities[0]->isAlive)
@@ -209,6 +222,7 @@ bool Game::checkIfPlayerDie()
             playerInit();
             spawnAsteroids();
             asteroidSpawnTimer.reset();
+            score = 0;
             return false;
         }
 
