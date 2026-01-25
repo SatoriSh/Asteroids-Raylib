@@ -1,5 +1,4 @@
 #include "game_object.h"
-
 #include <iostream>
 
 GameObject::GameObject(float x, float y, bool isAlive)
@@ -16,6 +15,7 @@ void GameObject::setY(float posY) { y = posY; }
 
 Vector2 GameObject::getPos() const { return {x, y}; }
 float GameObject::getRotation() const { return 0.0f; }
+Rectangle GameObject::getRec() const { return {0,0,0,0}; };
 
 GameObject::~GameObject()
 {

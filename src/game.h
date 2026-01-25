@@ -1,6 +1,7 @@
 #pragma once
 #include <iostream>
 #include <vector>
+#include <typeinfo>
 #include "raylib.h"
 #include "gameObjects/game_object.h"
 #include "gameObjects/player.h"
@@ -31,6 +32,7 @@ class Game
     void playerShoot();
     void splitAsteroid(int asteroidLvl, Vector2 position);
     void spawnAsteroids();
+    void checkCollisions();
     const int screenWidth = 850;
     const int screenHeight = 850;
     const int FPS = 60;

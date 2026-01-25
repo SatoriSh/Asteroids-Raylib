@@ -14,6 +14,7 @@ class Player : public GameObject
     void process() override;
     void draw() override;
     float getRotation() const override;
+    Rectangle getRec() const override;
 
     std::function<void()> onShoot;
   private:
@@ -24,6 +25,7 @@ class Player : public GameObject
     Texture2D playerTexture;
     Texture2D playerEngineFlameTexture;
     Vector2 origin;
+    Rectangle rec;
     void inputHandler();
     void updateDirection();
     void drawEngineFlame();

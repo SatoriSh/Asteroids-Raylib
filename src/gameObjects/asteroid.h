@@ -11,15 +11,17 @@ class Asteroid : public GameObject
 
     void process() override;
     void draw() override;
+    Rectangle getRec() const override;
 
     std::function<void(int asteroidLvl, Vector2 position)> onDestroyed;
-  private:
     int asteroidLvl;
+  private:
     Vector2 direction;
     Texture2D asteroidTexture;
     float speed;
     float rotation;
     float rotationSpeed;
     Vector2 origin;
+    Rectangle rec;
     bool rotateClockwise;
 };

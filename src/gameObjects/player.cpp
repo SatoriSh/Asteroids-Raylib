@@ -4,15 +4,18 @@
 Player::Player(float x, float y) 
     : GameObject(x, y, true)
 {
+    gameObjectType = GameObjectTypeEnum::PlAYER;
+
     direction = {0, 0};
     accelerationSpeed = 15.5f;
-    rotationSpeed = 350.0f;
+    rotationSpeed = 300.0f;
     rotation = 0.0f;
 
     playerTexture = LoadTexture("src/sprites/player.png");
     playerTexture.width *= 3.5;
     playerTexture.height *= 3.5;
     origin = {(float)playerTexture.width / 2, (float)playerTexture.height / 2};
+    rec = Rectangle{getPos().x, getPos().y, (float)playerTexture.width, (float)playerTexture.height};
 
     playerEngineFlameTexture = LoadTexture("src/sprites/player_engine_flame.png");
     playerEngineFlameTexture.width *= 3.5;
@@ -40,15 +43,14 @@ void Player::process()
     setY(getPos().y + direction.y);
 
     draw();
-
-    std::cout << "direction X: " << direction.x << "\ndirection Y: " << direction.y << "\n";
 }
 
 void Player::draw()
 {
+    rec = Rectangle{getPos().x, getPos().y, (float)playerTexture.width, (float)playerTexture.height};
     DrawTexturePro(
         playerTexture, Rectangle{0, 0, (float)playerTexture.width, (float)playerTexture.height},
-        Rectangle{getPos().x, getPos().y, (float)playerTexture.width, (float)playerTexture.height}, origin,
+        rec, origin,
         rotation, WHITE);
 
     drawEngineFlame();
@@ -99,7 +101,8 @@ void Player::drawEngineFlame()
 {
     DrawTexturePro(
         playerEngineFlameTexture, Rectangle{0, 0, (float)playerEngineFlameTexture.width, (float)playerEngineFlameTexture.height},
-        Rectangle{getPos().x, getPos().y, (float)playerEngineFlameTexture.width, (float)playerEngineFlameTexture.height}, origin,
+        Rectangle{getPos().x, getPos().y, (float)playerEngineFlameTexture.width, (float)playerEngineFlameTexture.height}, 
+        origin,
         rotation, Fade(RED, engineFlameTransparency));
 }
 
@@ -120,6 +123,10 @@ void Player::updateTimers()
 float Player::getRotation() const
 {
     return rotation;
+}
+Rectangle Player::getRec() const
+{
+    return rec;
 }
 
 Player::~Player()

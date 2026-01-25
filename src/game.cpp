@@ -34,6 +34,8 @@ void Game::process()
         ClearBackground(BLACK);
 
         asteroidSpawnTimer.update();
+        
+        checkCollisions();
 
         if (asteroidSpawnTimer.timeout())
         {
@@ -77,7 +79,6 @@ void Game::process()
 
 void Game::playerShoot()
 {
-    std::cout << "Shoot!\n";
     entitiesToAdd.push_back(std::make_unique<Bullet>(
         entities[0]->getPos().x,
         entities[0]->getPos().y, 
@@ -100,6 +101,33 @@ void Game::spawnAsteroids()
         };
 
         entities.push_back(std::move(asteroid));
+    }
+}
+
+void Game::checkCollisions()
+{
+    for (std::unique_ptr<GameObject> &entity1 : entities)
+    {
+        if (entity1->gameObjectType == GameObject::GameObjectTypeEnum::ASTEROID)
+            continue;
+        for (std::unique_ptr<GameObject> &entity2 : entities)
+        {
+            if (entity1->gameObjectType == entity2->gameObjectType)
+                continue;
+
+
+            if (entity2->gameObjectType == GameObject::GameObjectTypeEnum::ASTEROID)
+            {
+                if (CheckCollisionRecs(entity1->getRec(), entity2->getRec()))
+                {
+                    Asteroid *asteroid = dynamic_cast<Asteroid *>(entity2.get());
+
+                    splitAsteroid(asteroid->asteroidLvl, asteroid->getPos());
+                    entity2->isAlive = false;
+                    entity1->isAlive = false;
+                }
+            }
+        }
     }
 }
 

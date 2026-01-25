@@ -4,6 +4,8 @@
 Bullet::Bullet(float x, float y, float rotation, Texture2D &texture)
     : GameObject(x, y, true), playerRotation(rotation), bulletTexture(texture)
 {
+    gameObjectType = GameObjectTypeEnum::BULLET;
+
     speed = 650.0f;
     rotateClockwise = GetRandomValue(1, 2) == 1 ? true : false;
     bulletRotation = 0.0f;
@@ -12,11 +14,12 @@ Bullet::Bullet(float x, float y, float rotation, Texture2D &texture)
     bulletTexture.width *= 2;
     bulletTexture.height *= 2;
     origin = {(float)bulletTexture.width / 2, (float)bulletTexture.height / 2};
+    rec = Rectangle{getPos().x, getPos().y, (float)bulletTexture.width, (float)bulletTexture.height};
 
     direction = {(cosf((playerRotation - 90) * DEG2RAD)),
                  (sinf((playerRotation - 90) * DEG2RAD))};
 
-    timer.timeoutTime = 3.5f;
+    timer.timeoutTime = 2.0f;
     timer.leftTime = timer.timeoutTime;
 
     std::cout << "Bullet created\n";
@@ -39,9 +42,15 @@ void Bullet::process()
 
 void Bullet::draw()
 {
+    rec = Rectangle{getPos().x, getPos().y, (float)bulletTexture.width, (float)bulletTexture.height};
     DrawTexturePro(bulletTexture, Rectangle{0, 0, (float)bulletTexture.width, (float)bulletTexture.height},
-                   Rectangle{getPos().x, getPos().y, (float)bulletTexture.width, (float)bulletTexture.height},
-                   origin, playerRotation, WHITE);
+                   rec, origin, 
+                   playerRotation, WHITE);
+}
+
+Rectangle Bullet::getRec() const
+{
+    return rec;
 }
 
 Bullet::~Bullet()

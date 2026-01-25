@@ -10,12 +10,14 @@ class Bullet : public GameObject
 
     void process() override;
     void draw() override;
+    Rectangle getRec() const override;
 
    private:
     Vector2 direction;
     float speed;
     Texture2D bulletTexture;
     Vector2 origin;
+    Rectangle rec;
     bool rotateClockwise;
     float playerRotation;
     float bulletRotation;
