@@ -48,6 +48,7 @@ class Game
 
     Texture2D bulletTexture;
     Texture2D asteroidTexture;
+    Sound explosionSound;
 
     Timer asteroidSpawnTimer;
     std::vector<AsteroidSpawnConfig> asteroidSpawnConfig;

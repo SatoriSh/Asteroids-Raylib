@@ -6,7 +6,7 @@ Bullet::Bullet(float x, float y, float rotation, Texture2D &texture)
 {
     gameObjectType = GameObjectTypeEnum::BULLET;
 
-    speed = 1000.0f;
+    speed = 1350.0f;
     rotateClockwise = GetRandomValue(1, 2) == 1 ? true : false;
     bulletRotation = 0.0f;
     rotationSpeed = 400.0f;

@@ -7,6 +7,9 @@ Game::Game()
     bulletTexture = LoadTexture("src/sprites/bullet.png");
     asteroidTexture = LoadTexture("src/sprites/asteroid.png");
 
+    explosionSound = LoadSound("src/sounds/explosion.wav");
+    SetSoundVolume(explosionSound, 0.35f);
+
     playerInit();
     entities[0]->isAlive = false;
 
@@ -130,6 +133,8 @@ void Game::checkCollisions()
             {
                 if (CheckCollisionRecs(entity1->getRec(), entity2->getRec()))
                 {
+                    PlaySound(explosionSound);
+
                     Asteroid *asteroid = dynamic_cast<Asteroid *>(entity2.get());
 
                     if (asteroid->asteroidLvl > 1)
@@ -138,8 +143,6 @@ void Game::checkCollisions()
                     updateScore(asteroid->asteroidLvl);
                     
                     entity2->isAlive = false;
-
-                    //////////////////////
                     entity1->isAlive = false;
                 }
             }
@@ -209,6 +212,17 @@ void Game::updateScore(int destroyedAsteroidLvl)
         score += 50;
     else if (destroyedAsteroidLvl == 3)
         score += 15;
+
+    if (score >= 5000)
+    {
+        currentLevel = 1;
+        asteroidSpawnTimer.timeoutTime = asteroidSpawnConfig[currentLevel].timeToSpawn;
+    }
+    else if (score >= 15000)
+    {
+        currentLevel = 2;
+        asteroidSpawnTimer.timeoutTime = asteroidSpawnConfig[currentLevel].timeToSpawn;
+    }
 }
 
 bool Game::checkIfPlayerDie()

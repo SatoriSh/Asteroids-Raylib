@@ -25,7 +25,7 @@ class GameObject
     virtual void draw();
     virtual float getRotation() const;
     virtual Rectangle getRec() const;
-    GameObjectTypeEnum gameObjectType;
+    GameObjectTypeEnum gameObjectType = GameObjectTypeEnum::PlAYER;
 
     bool isAlive;
   private:

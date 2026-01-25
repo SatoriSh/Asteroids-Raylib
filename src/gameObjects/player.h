@@ -37,4 +37,7 @@ class Player : public GameObject
     float cooldownTime;
 
     float engineFlameTransparency;
+
+    Sound shootSound;
+    Sound engineSound;
 };

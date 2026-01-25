@@ -26,9 +26,13 @@ Player::Player(float x, float y)
     timer.leftTime = timer.timeoutTime;
     canShoot = true;
 
-    drawEngineFlameTimer.timeoutTime = 0.05f;
+    drawEngineFlameTimer.timeoutTime = 0.070f;
     drawEngineFlameTimer.leftTime = drawEngineFlameTimer.timeoutTime;
     engineFlameTransparency = 1.0f;
+
+    shootSound = LoadSound("src/sounds/fire.wav");
+    engineSound = LoadSound("src/sounds/thrust.wav");
+    SetSoundVolume(shootSound, 0.2f);
 
     std::cout << "Player created\n";
 }
@@ -73,6 +77,7 @@ void Player::inputHandler()
         {
             engineFlameTransparency = 1.0f;
             drawEngineFlameTimer.reset();
+            PlaySound(engineSound);
         }
         else
         {
@@ -86,6 +91,7 @@ void Player::inputHandler()
     if ((IsKeyDown(KEY_SPACE) || IsMouseButtonDown(MOUSE_BUTTON_LEFT)) && canShoot)
     {
         onShoot();
+        PlaySound(shootSound);
         canShoot = false;
         timer.reset();
 
