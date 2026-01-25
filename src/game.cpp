@@ -80,7 +80,7 @@ void Game::process()
                 entities.end()
             );
 
-        DrawText(TextFormat("%d", score), screenWidth / 2 - 50, 35, 60, WHITE);
+        DrawText(TextFormat("%d", score), screenWidth / 2 - 100, 45, 60, WHITE);
         DrawFPS(10, 10);
         EndDrawing();
     }
@@ -103,7 +103,7 @@ void Game::spawnAsteroids()
     for (int i = 0; i < asteroidSpawnConfig[currentLevel].quantity; i++)
     {
         float x = GetRandomValue(0, screenWidth);
-        float y = GetRandomValue(1, 2) == 1 ? 0 : screenHeight + 10;
+        float y = GetRandomValue(1, 2) == 1 ? -spawnOffset : screenHeight + spawnOffset;
 
         entities.push_back(std::make_unique<Asteroid>(
             x, y, 
@@ -166,14 +166,14 @@ void Game::splitAsteroid(int asteroidLvl, Vector2 position)
 
 void Game::checkBounds(GameObject *entity)
 {
-    if (entity->getPos().x > screenWidth + 15)
+    if (entity->getPos().x > screenWidth + spawnOffset)
         entity->setX(0);
-    if (entity->getPos().x < -15)
+    if (entity->getPos().x < -spawnOffset)
         entity->setX(screenWidth);
 
-    if (entity->getPos().y > screenHeight + 15)
+    if (entity->getPos().y > screenHeight + spawnOffset)
         entity->setY(0);
-    if (entity->getPos().y < -15)
+    if (entity->getPos().y < -spawnOffset)
         entity->setY(screenHeight);
 }
 
@@ -215,7 +215,11 @@ bool Game::checkIfPlayerDie()
 {
     if (!entities[0]->isAlive)
     {
-        DrawText("Press enter to start", screenWidth / 2 - 210, screenHeight / 2, 40, YELLOW);
+        DrawText("Press enter to start", screenWidth / 2 - 250, screenHeight / 2, 40, YELLOW);
+
+        if (score > 0)
+            DrawText(TextFormat("%d", score), screenWidth / 2 - 100, 45, 60, WHITE);
+
         if (IsKeyPressed(KEY_ENTER))
         {
             entities.clear();

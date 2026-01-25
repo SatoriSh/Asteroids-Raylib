@@ -40,6 +40,7 @@ class Game
     void generateStarsOnce();
     RenderTexture2D starsTexture;
     
+    const int spawnOffset = 25;
     const int starsCount = 500;
     int screenWidth;
     int screenHeight;
