@@ -151,7 +151,14 @@ void Game::splitAsteroid(int asteroidLvl, Vector2 position)
 
     for (int i = 0; i < asteroidsCount; i++)
     {
-        auto asteroid = std::make_unique<Asteroid>(position.x, position.y, asteroidLvl - 1, Vector2{(float)GetRandomValue(-screenWidth / 4, screenWidth), (float)GetRandomValue(-screenHeight / 4, screenHeight)}, asteroidTexture);
+        Vector2 direction = {GetRandomValue(0, GetScreenWidth() / 2), GetRandomValue(0, GetScreenHeight() / 2)};
+
+        auto asteroid = std::make_unique<Asteroid>(
+            position.x, position.y, 
+            asteroidLvl - 1, 
+            direction, 
+            asteroidTexture
+        );
 
         asteroid->onDestroyed = [this](int asteroidLvl, Vector2 position) {
             splitAsteroid(asteroidLvl, position);
