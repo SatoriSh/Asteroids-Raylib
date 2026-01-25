@@ -83,7 +83,7 @@ void Player::inputHandler()
     {
         engineFlameTransparency = 0.0f;
     }
-    if (IsKeyDown(KEY_SPACE) && canShoot)
+    if ((IsKeyDown(KEY_SPACE) || IsMouseButtonDown(MOUSE_BUTTON_LEFT)) && canShoot)
     {
         onShoot();
         canShoot = false;

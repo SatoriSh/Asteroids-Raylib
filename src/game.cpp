@@ -7,13 +7,8 @@ Game::Game()
     bulletTexture = LoadTexture("src/sprites/bullet.png");
     asteroidTexture = LoadTexture("src/sprites/asteroid.png");
 
-    auto player = std::make_unique<Player>(screenWidth / 2, screenHeight / 2); // сначала создаю player здесь чтобы удобно подключиться к его событиям
-
-    player->onShoot = [this]() {
-        playerShoot();
-    };
-
-    entities.push_back(std::move(player)); // переменная player теперь пустая, объект ушел в вектор
+    playerInit();
+    entities[0]->isAlive = false;
 
     asteroidSpawnConfig = {
         {7.5f, 3},
@@ -42,6 +37,9 @@ void Game::process()
             WHITE
         );
 
+        if (checkIfPlayerDie())
+            continue;
+
         asteroidSpawnTimer.update();
         
         checkCollisions();
@@ -69,7 +67,7 @@ void Game::process()
 
         entities.erase(
                 std::remove_if(
-                    entities.begin(),
+                    entities.begin() + 1,
                     entities.end(),
                     [](const std::unique_ptr<GameObject>& entity) 
                     { 
@@ -151,7 +149,7 @@ void Game::splitAsteroid(int asteroidLvl, Vector2 position)
 
     for (int i = 0; i < asteroidsCount; i++)
     {
-        Vector2 direction = {GetRandomValue(0, GetScreenWidth() / 2), GetRandomValue(0, GetScreenHeight() / 2)};
+        Vector2 direction = {GetRandomValue(GetScreenWidth() / 2, GetScreenWidth() / 4), GetRandomValue(GetScreenWidth() / 2, GetScreenHeight() / 4)};
 
         auto asteroid = std::make_unique<Asteroid>(
             position.x, position.y, 
@@ -192,6 +190,36 @@ void Game::generateStarsOnce()
     }
 
     EndTextureMode();
+}
+
+void Game::playerInit()
+{
+    auto player = std::make_unique<Player>(
+        screenWidth / 2, screenHeight / 2); // сначала создаю player здесь чтобы удобно подключиться к его событиям
+
+    player->onShoot = [this]() { playerShoot(); };
+
+    entities.push_back(std::move(player)); // переменная player теперь пустая, объект ушел в вектор
+}
+
+bool Game::checkIfPlayerDie()
+{
+    if (!entities[0]->isAlive)
+    {
+        DrawText("Press enter to start", screenWidth / 2 - 210, screenHeight / 2, 40, YELLOW);
+        if (IsKeyPressed(KEY_ENTER))
+        {
+            entities.clear();
+            beginning = false;
+            playerInit();
+            asteroidSpawnTimer.reset();
+            return false;
+        }
+
+        EndDrawing();
+        return true;
+    }
+    return false;
 }
 
 void Game::initWindow()

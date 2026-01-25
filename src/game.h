@@ -28,18 +28,21 @@ class Game
     std::vector<std::unique_ptr<GameObject>> entitiesToAdd; // чтобы добавлять объекты по очереди
 
     void initWindow();
+    void playerInit();
     void checkBounds(GameObject *entity);
     void playerShoot();
     void splitAsteroid(int asteroidLvl, Vector2 position);
     void spawnAsteroids();
     void checkCollisions();
+    bool checkIfPlayerDie();
     void generateStarsOnce();
     RenderTexture2D starsTexture;
+    
     const int starsCount = 500;
-
     const int screenWidth = 1920;
     const int screenHeight = 1080;
     const int FPS = 60;
+    bool beginning = true;
 
     Texture2D bulletTexture;
     Texture2D asteroidTexture;
