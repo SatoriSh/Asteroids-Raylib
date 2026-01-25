@@ -15,7 +15,7 @@
 </div>
 
 
-A high-performance, object-oriented implementation of the classic Asteroids arcade game. Developed using **Modern C++ (C++17)** and the **Raylib** library.
+A high-performance, object-oriented implementation of the classic Asteroids arcade game. Developed using **Modern C++** and the **Raylib** library.
 
 ---
 
