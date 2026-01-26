@@ -3,7 +3,7 @@
 #include <emscripten/emscripten.h>
 #endif
 
-Game* game;
+Game *game;
 
 // функция которую браузер будет вызывать каждый кадр
 void UpdateDrawFrame() {
@@ -11,6 +11,7 @@ void UpdateDrawFrame() {
 }
 
 int main() {
+    InitAudioDevice();
     game = new Game();
 
 #ifdef __EMSCRIPTEN__
@@ -21,7 +22,7 @@ int main() {
         UpdateDrawFrame();
     }
 #endif
-
+    CloseAudioDevice();
     delete game;
     return 0;
 }
