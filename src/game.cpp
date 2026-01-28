@@ -56,7 +56,6 @@ void Game::process()
                                   [](const std::unique_ptr<GameObject> &entity) { return !entity->isAlive; }),
                    entities.end());
     DrawText(TextFormat("%d", score), screenWidth / 2 - 100, 45, 60, WHITE);
-    DrawFPS(10, 10);
     EndDrawing();
 }
 
