@@ -1,8 +1,8 @@
 #include "player.h"
 #include "raymath.h"
 
-Player::Player(float x, float y) 
-    : GameObject(x, y, true)
+Player::Player(float x, float y, Texture2D texture) 
+    : GameObject(x, y, true), playerTexture(texture)
 {
     gameObjectType = GameObjectTypeEnum::PlAYER;
 
@@ -11,7 +11,6 @@ Player::Player(float x, float y)
     rotationSpeed = 300.0f;
     rotation = 0.0f;
 
-    playerTexture = LoadTexture("src/sprites/player.png");
     playerTexture.width *= 3.5;
     playerTexture.height *= 3.5;
     origin = {(float)playerTexture.width / 2, (float)playerTexture.height / 2};
@@ -34,8 +33,6 @@ Player::Player(float x, float y)
     engineSound = LoadSound("src/sounds/thrust.wav");
     SetSoundVolume(shootSound, 0.2f);
     SetSoundVolume(engineSound, 0.25f);
-
-    std::cout << "Player created\n";
 }
 
 void Player::process()
@@ -140,6 +137,7 @@ Rectangle Player::getRec() const
 
 Player::~Player()
 {
-    UnloadTexture(playerTexture);
-    std::cout << "Player deleted\n";
+    UnloadTexture(playerEngineFlameTexture);
+    UnloadSound(engineSound);
+    UnloadSound(shootSound);
 }

@@ -46,6 +46,7 @@ class Game
     int screenHeight;
     const int FPS = 60;
 
+    Texture2D playerTexture;
     Texture2D bulletTexture;
     Texture2D asteroidTexture;
     Sound explosionSound;

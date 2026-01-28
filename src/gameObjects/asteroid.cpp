@@ -16,8 +16,6 @@ Asteroid::Asteroid(float x, float y, int asteroidLvl, Vector2 playerPosition, Te
     asteroidTexture.height *= asteroidLvl + 1;
     origin = {(float)asteroidTexture.width / 2, (float)asteroidTexture.height / 2};
     rec = Rectangle{getPos().x, getPos().y, (float)asteroidTexture.width, (float)asteroidTexture.height};
-
-    std::cout << "Asteroid created\n";
 }
 
 void Asteroid::process()
@@ -47,5 +45,4 @@ Rectangle Asteroid::getRec() const
 
 Asteroid::~Asteroid()
 {
-    std::cout << "Asteroid deleted\n";
 }

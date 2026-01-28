@@ -8,7 +8,7 @@
 class Player : public GameObject
 {
   public:
-    Player(float x, float y);
+    Player(float x, float y, Texture2D texture);
     ~Player();
 
     void process() override;

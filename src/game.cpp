@@ -3,6 +3,7 @@
 Game::Game()
 {
     initWindow();
+    playerTexture = LoadTexture("src/sprites/player.png");
     bulletTexture = LoadTexture("src/sprites/bullet.png");
     asteroidTexture = LoadTexture("src/sprites/asteroid.png");
     explosionSound = LoadSound("src/sounds/explosion.wav");
@@ -109,8 +110,8 @@ void Game::splitAsteroid(int asteroidLvl, Vector2 position)
     int asteroidsCount = asteroidLvl == 2 ? 3 : 2;
     for (int i = 0; i < asteroidsCount; i++)
     {
-        Vector2 direction = {GetRandomValue(GetScreenWidth() / 2, GetScreenWidth() / 4),
-                             GetRandomValue(GetScreenWidth() / 2, GetScreenHeight() / 4)};
+        Vector2 direction = {(float)GetRandomValue(GetScreenWidth() / 2, GetScreenWidth() / 4),
+                             (float)GetRandomValue(GetScreenWidth() / 2, GetScreenHeight() / 4)};
         entitiesToAdd.push_back(
             std::make_unique<Asteroid>(position.x, position.y, asteroidLvl - 1, direction, asteroidTexture));
     }
@@ -134,14 +135,14 @@ void Game::generateStarsOnce()
     BeginTextureMode(starsTexture);
     for (int i = 0; i < starsCount; i++)
     {
-        DrawCircle(GetRandomValue(1, screenWidth), GetRandomValue(1, screenHeight), 1.0f, VIOLET);
+        DrawCircle(GetRandomValue(0, screenWidth), GetRandomValue(0, screenHeight), 1.0f, VIOLET);
     }
     EndTextureMode();
 }
 
 void Game::playerInit()
 {
-    auto player = std::make_unique<Player>(screenWidth / 2, screenHeight / 2);
+    auto player = std::make_unique<Player>(screenWidth / 2, screenHeight / 2, playerTexture);
     player->onShoot = [this]() { playerShoot(); };
     entities.push_back(std::move(player));
 }
@@ -175,6 +176,8 @@ bool Game::checkIfPlayerDie()
             entities.clear();
             playerInit();
             spawnAsteroids();
+            currentLevel = 0;
+            asteroidSpawnTimer.timeoutTime = asteroidSpawnConfig[currentLevel].timeToSpawn;
             asteroidSpawnTimer.reset();
             score = 0;
             return false;
@@ -200,7 +203,8 @@ void Game::initWindow()
 
 Game::~Game()
 {
+    UnloadTexture(playerTexture);
     UnloadTexture(bulletTexture);
     UnloadTexture(asteroidTexture);
-    std::cout << "Game deleted\n";
+    UnloadSound(explosionSound);
 }

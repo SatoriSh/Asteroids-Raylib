@@ -2,7 +2,6 @@
 #include "raylib.h"
 #include "../utils/timer.h"
 
-
 class GameObject
 {
   public:

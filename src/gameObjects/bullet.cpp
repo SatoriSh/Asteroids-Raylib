@@ -21,8 +21,6 @@ Bullet::Bullet(float x, float y, float rotation, Texture2D &texture)
 
     timer.timeoutTime = 2.0f;
     timer.leftTime = timer.timeoutTime;
-
-    std::cout << "Bullet created\n";
 }
 
 void Bullet::process()
@@ -55,5 +53,4 @@ Rectangle Bullet::getRec() const
 
 Bullet::~Bullet()
 {
-    std::cout << "Bullet deleted\n";
 }
