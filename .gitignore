@@ -37,10 +37,13 @@
 *.out
 *.app
 x64/
+Asteroids-Raylib.html
+Asteroids-Raylib.js
+Asteroids-Raylib.wasm
+Asteroids-Raylib.data
 
 # debug information files
 *.dwo
 
 # VS
 .vs
-
