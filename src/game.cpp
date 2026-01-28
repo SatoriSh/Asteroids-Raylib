@@ -195,7 +195,6 @@ void Game::initWindow()
 {
     SetConfigFlags(FLAG_WINDOW_UNDECORATED);
     InitWindow(GetMonitorWidth(0), GetMonitorHeight(0), "Asteroids");
-    SetTargetFPS(FPS);
     MaximizeWindow();
     screenWidth = GetScreenWidth();
     screenHeight = GetScreenHeight();
