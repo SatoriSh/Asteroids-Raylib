@@ -12,8 +12,11 @@
 </td>
 </tr>
 </table>
-</div>
 
+[![Itch.io](https://img.shields.io/badge/Play_on_Itch.io-FA5C5C?style=for-the-badge&logo=itch.io&logoColor=white)](https://satorish.itch.io/asteroids-raylib)
+[![Twitter](https://img.shields.io/badge/Twitter-black?style=for-the-badge&logo=x&logoColor=white)](https://x.com/_AutisticGames)
+
+</div>
 
 A high-performance, object-oriented implementation of the classic Asteroids arcade game. Developed using **Modern C++** and the **Raylib** library.
 
