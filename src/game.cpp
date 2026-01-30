@@ -154,7 +154,8 @@ void Game::updateScore(int destroyedAsteroidLvl)
         score += 50;
     else if (destroyedAsteroidLvl == 3)
         score += 15;
-    if (score >= 5000)
+
+    if (score >= 5000 && score < 15000)
     {
         currentLevel = 1;
         asteroidSpawnTimer.timeoutTime = asteroidSpawnConfig[currentLevel].timeToSpawn;
